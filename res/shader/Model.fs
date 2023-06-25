@@ -4,6 +4,7 @@ out vec4 FragColor;
 in vec2 TexCoords;
 in vec3 Normal;
 in vec3 FragPos;
+in vec3 colortest;
 
 uniform vec3 viewPos;
 uniform vec3 lightPos;
@@ -27,6 +28,6 @@ void main()
     vec3 specular = specularStrength * spec * Color;  
         
     vec3 result = (ambient + diffuse + specular) * Color;
-    FragColor = vec4(result, 1.0); //模型网格颜色控制
-
+    FragColor = vec4(colortest, 1.0); //模型网格颜色控制
+    //FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0);
 }

@@ -12,6 +12,7 @@ public:
     unsigned int ID;
 
     Shader(const GLchar* vertex_shader_path, const GLchar* fragment_shader_path);
+    Shader(const char* vertexPath, const char* fragmentPath, const char* geometryPath);
     ~Shader();
 
     void Use();
@@ -34,6 +35,7 @@ private:
     int LinkShader(const char* vertex_shader_code, const char* fragment_shader_code);
     int GetUniform(const std::string &name) const;
     void CheckCompileErrors(GLuint shader, std::string type);
+
 };
 
 #endif // !__SHADER_H__

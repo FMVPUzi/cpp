@@ -31,10 +31,35 @@ glm::vec3 lightPos(8.0f,8.0f,5.0f);
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
+
 int main() {
 	string path;
+	char is_default = '1';
+	char display_normal_input = '0';
+	int line_width = 1;
+	int PolygonMode = 0;
+	glm::vec3 colortest(1.0f, 0.5f, 0.2f);
 	std::cout << "plz input path"<<endl;
 	std::cin >> path;
+
+	std::cout << "Whether run with default configs" << endl;
+	std::cout << "0 is no , 1 is yes" << endl;
+	std::cin >> is_default;
+	if (is_default == '1') {
+
+	}
+	else {
+		std::cout << "plz set the width of the line , this will be valid when u turn on the PolygonMode" << endl;
+		std::cin >> line_width;
+		std::cout << "Whether turn on the PolygonMode" << endl;
+		std::cout << "0 is no , 1 is yes" << endl;
+		std::cin >> PolygonMode;
+		std::cout << "Whether display the normal" << endl;
+		std::cout << "0 is non-display , 1 is display" << endl;
+		std::cin >> display_normal_input;
+
+	}
+
 	// 初始化GLFW
 	glfwInit();                                                     // 初始化GLFW
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);                  // OpenGL版本为3.3，主次版本号均设为3
@@ -65,13 +90,19 @@ int main() {
 	// 指定当前视口尺寸(前两个参数为左下角位置，后两个参数是渲染窗口宽、高)
 	glViewport(0, 0, screen_width, screen_height);
 	Shader shader("res/shader/Model.vs", "res/shader/Model.fs");//加载着色器
+	Shader normalShader("res/shader/normal_visualization.vs", "res/shader/normal_visualization.fs", "res/shader/normal_visualization.gs");
 	Model ourModel(path);
 
 
-	glEnable(GL_DEPTH_TEST);
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //采用网格模式
+	glEnable(GL_DEPTH_TEST);	
+
+	if (PolygonMode == 1)
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //采用网格模式
+	if (PolygonMode == 2)
+		glPolygonMode(GL_FRONT_AND_BACK, GL_POINT); //采用点模式
+
 	glPointSize(1);//点的大小设置 但是不生效
-	glLineWidth(1);//线宽设置
+	glLineWidth(line_width);//线宽设置
 	
 
 
@@ -119,9 +150,22 @@ int main() {
 		//绘制
 		ourModel.Draw(shader);
 
+		if (display_normal_input == '1') {
+
+			//绘制法向量
+			normalShader.Use();
+			normalShader.SetMat4("projection", projection);
+			normalShader.SetMat4("view", view);
+			normalShader.SetMat4("model", model);
+
+			ourModel.Draw(normalShader);
+		}
+
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
+
+
 	}
 
 
