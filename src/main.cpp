@@ -69,8 +69,8 @@ int main() {
 
 
 	glEnable(GL_DEPTH_TEST);
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //采用网格模式
-	glPointSize(1);//点的大小设置 但是不生效？
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //采用网格模式
+	glPointSize(1);//点的大小设置 但是不生效
 	glLineWidth(1);//线宽设置
 	
 
@@ -146,6 +146,10 @@ void processInput(GLFWwindow *window)
 		camera.ProcessKeyboard(RIGHT, deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
 		camera.ProcessKeyboard(TOP, deltaTime);
+	if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS)
+		camera.ProcessKeyboard(SIDE, deltaTime);
+	if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS)
+		camera.ProcessKeyboard(FRONT, deltaTime);
 }
 
 //窗口分辨率自适应
@@ -177,7 +181,3 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
 	camera.ProcessMouseScroll(yoffset);
 }
-
-
-
-

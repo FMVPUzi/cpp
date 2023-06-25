@@ -9,7 +9,7 @@
 class Texture
 {
 public:
-    static unsigned int LoadTextureFromFile(const char* path);
+    static unsigned int LoadTextureFromFile(const char* path);//ÎŞ·ûºÅÕûĞÍ
 };
 
 #endif // !__TEXTURE_H__

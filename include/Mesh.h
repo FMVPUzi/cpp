@@ -43,4 +43,4 @@ private:
 	void setupMesh();
 };
 
-#endif // !__MESH_H__
+#endif 
