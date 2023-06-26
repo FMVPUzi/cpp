@@ -1,9 +1,3 @@
-/***
-* 例程  模型加载 (MAKE后运行时可删除ALL_BUILD，也可以将Task-model设为默认启动工程)
-* 步骤:
-* 加载模型进行操作即可
-*/
-
 #include <iostream>
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
@@ -38,22 +32,33 @@ int main() {
 	char display_normal_input = '0';
 	int line_width = 1;
 	int PolygonMode = 0;
+	int point_size = 1;
 	glm::vec3 colortest(1.0f, 0.5f, 0.2f);
-	std::cout << "plz input path"<<endl;
+	std::cout << "Please input path"<<endl;
 	std::cin >> path;
 
 	std::cout << "Whether run with default configs" << endl;
 	std::cout << "0 is no , 1 is yes" << endl;
 	std::cin >> is_default;
+
 	if (is_default == '1') {
 
 	}
 	else {
-		std::cout << "plz set the width of the line , this will be valid when u turn on the PolygonMode" << endl;
-		std::cin >> line_width;
-		std::cout << "Whether turn on the PolygonMode" << endl;
-		std::cout << "0 is no , 1 is yes" << endl;
+		std::cout << "Choose the PolygonMode" << endl;
+		std::cout << "0 is NO , 1 is LINE , 2 is POINT" << endl;
 		std::cin >> PolygonMode;
+
+		if(PolygonMode == 1){
+			std::cout << "Set the width of the line " << endl;
+			std::cin >> line_width;
+		}
+
+		if (PolygonMode == 2) {
+			std::cout << "Set the size of point " << endl;
+			std::cin >> point_size;
+		}
+
 		std::cout << "Whether display the normal" << endl;
 		std::cout << "0 is non-display , 1 is display" << endl;
 		std::cin >> display_normal_input;
@@ -68,7 +73,7 @@ int main() {
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // 如果使用的是Mac OS X系统，需加上这行
 	glfwWindowHint(GLFW_RESIZABLE, FALSE);						    // 不可改变窗口大小
 																	// 创建窗口(宽、高、窗口名称)
-	auto window = glfwCreateWindow(screen_width, screen_height, "model display", nullptr, nullptr);
+	auto window = glfwCreateWindow(screen_width, screen_height, "3D_MODEL_DISPLAY", nullptr, nullptr);
 	if (window == nullptr) {
 		std::cout << "Failed to Create OpenGL Context" << std::endl;
 		glfwTerminate();
@@ -94,6 +99,11 @@ int main() {
 	Model ourModel(path);
 
 
+
+
+
+
+
 	glEnable(GL_DEPTH_TEST);	
 
 	if (PolygonMode == 1)
@@ -101,7 +111,7 @@ int main() {
 	if (PolygonMode == 2)
 		glPolygonMode(GL_FRONT_AND_BACK, GL_POINT); //采用点模式
 
-	glPointSize(1);//点的大小设置 但是不生效
+	glPointSize(point_size);//点的大小设置
 	glLineWidth(line_width);//线宽设置
 	
 

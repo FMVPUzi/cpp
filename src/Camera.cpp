@@ -52,19 +52,19 @@ void Camera::ProcessKeyboard(Camera_Movement direction, float deltaTime)
 		//Position = Right * velocity;
 		//Yaw += 0.0f; //摄像机右转，模型左转
 		Pitch =-89.0f; //摄像机上抬,模型下抬
-		Position = glm::vec3(0, 2, 0);
+		Position = glm::vec3(0, 5, 0);
 		UpdateCameraVectors();
 	}
 	if (direction == SIDE) {
 		Yaw = 179.0f;
 		Pitch = 0.0f;
-		Position = glm::vec3(2, 0, 0);
+		Position = glm::vec3(5, 0, 0);
 		UpdateCameraVectors();
 	}
 	if (direction == FRONT) {
 		Yaw = -89.0f;
 		Pitch = 0.0f;
-		Position = glm::vec3(0, 0, 2);
+		Position = glm::vec3(0, 0, 5);
 		UpdateCameraVectors();
 	}
 
