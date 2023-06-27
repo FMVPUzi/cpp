@@ -33,7 +33,8 @@ int main() {
 	int line_width = 1;
 	int PolygonMode = 0;
 	int point_size = 1;
-	glm::vec3 colortest(1.0f, 0.5f, 0.2f);
+	float color[4];
+	
 	std::cout << "Please input path"<<endl;
 	std::cin >> path;
 
@@ -43,8 +44,13 @@ int main() {
 
 	if (is_default == '1') {
 
+		color[0] = color[1] = color[2] = color[3] = 0;
+
 	}
 	else {
+		std::cout << "Please set the color as RGBA" << endl;
+		std::cin >> color[0] >> color[1] >> color[2] >> color[3];
+
 		std::cout << "Choose the PolygonMode" << endl;
 		std::cout << "0 is NO , 1 is LINE , 2 is POINT" << endl;
 		std::cin >> PolygonMode;
@@ -99,8 +105,8 @@ int main() {
 	Model ourModel(path);
 
 
-
-
+	
+	
 
 
 
@@ -129,6 +135,7 @@ int main() {
 
 	// 渲染循环
 	while (!glfwWindowShouldClose(window)) {
+		shader.SetVec4("colortest", color[0], color[1], color[2], color[3]);
 
 		//计算每帧的时间差
 		float currentFrame = glfwGetTime();
