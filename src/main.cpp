@@ -28,8 +28,8 @@ float lastFrame = 0.0f;
 
 int main() {
 	string path;
-	char is_default = '1';
-	char display_normal_input = '0';
+	int is_default = 1;
+	int display_normal_input = 0;
 	int line_width = 1;
 	int PolygonMode = 0;
 	int point_size = 1;
@@ -41,8 +41,13 @@ int main() {
 	std::cout << "Whether run with default configs" << endl;
 	std::cout << "0 is no , 1 is yes" << endl;
 	std::cin >> is_default;
+	while (is_default != 0 && is_default != 1 )
+	{
+		std::cout << "An invalid number was detected.Please re-enter 0 or 1" << endl;
+		std::cin >> is_default;
+	}
 
-	if (is_default == '1') {
+	if (is_default == 1) {
 
 		color[0] = color[1] = color[2] = color[3] = 0;
 
@@ -50,11 +55,19 @@ int main() {
 	else {
 		std::cout << "Please set the color as RGBA" << endl;
 		std::cin >> color[0] >> color[1] >> color[2] >> color[3];
-
+		while (color[0] > 255 || color[0] < 0 || color[1]>255 || color[1] < 0 || color[2]>255 || color[2] < 0 || color[3]>1 || color[3] < 0)
+		{
+			std::cout << "An invalid number was detected. Please re-enter your number. " << endl;
+			std::cin >> color[0] >> color[1] >> color[2] >> color[3];
+		}
 		std::cout << "Choose the PolygonMode" << endl;
-		std::cout << "0 is NO , 1 is LINE , 2 is POINT" << endl;
+		std::cout << "0 is SURFACE , 1 is LINE , 2 is POINT" << endl;
 		std::cin >> PolygonMode;
-
+		while ( PolygonMode !=0 && PolygonMode != 1 && PolygonMode != 2)
+		{
+			std::cout << "An invalid number was detected.Please re-enter 0,1 or 2" << endl;
+			std::cin >> PolygonMode;
+		}
 		if(PolygonMode == 1){
 			std::cout << "Set the width of the line " << endl;
 			std::cin >> line_width;
@@ -68,9 +81,14 @@ int main() {
 		std::cout << "Whether display the normal" << endl;
 		std::cout << "0 is non-display , 1 is display" << endl;
 		std::cin >> display_normal_input;
+		while (display_normal_input != 0 && display_normal_input != 1)
+		{
+			std::cout<<"An invalid number was detected.Please re-enter 0 or 1"<<endl;
+			std::cin >> display_normal_input;
+		}
 
 	}
-
+	//UI 更好算法加快加载速度  纹理映射  光照（自定义环境光）   
 	// 初始化GLFW
 	glfwInit();                                                     // 初始化GLFW
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);                  // OpenGL版本为3.3，主次版本号均设为3
@@ -167,7 +185,7 @@ int main() {
 		//绘制
 		ourModel.Draw(shader);
 
-		if (display_normal_input == '1') {
+		if (display_normal_input == 1) {
 
 			//绘制法向量
 			normalShader.Use();
